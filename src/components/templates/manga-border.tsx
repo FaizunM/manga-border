@@ -25,13 +25,13 @@ export const MangaBorder = () => {
 
   const handleFiles = (files: FileList | null) => {
     if (!files) return;
-    setImages([]);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!file) continue;
       if (!file.type.startsWith("image/", 0)) continue;
       setImages((state) => [...state, file]);
     }
+    forceUpdate();
   };
 
   return (
@@ -93,6 +93,12 @@ export const MangaBorder = () => {
               />
             );
           })}
+          <label
+            htmlFor="input-files"
+            className="min-w-[40px] h-10 flex items-center justify-center hover:bg-[rgba(0,0,0,0.025)] text-gray-400"
+          >
+            <i className="fa-light fa-plus"></i>
+          </label>
         </TabContainer>
         {images.length > 0 &&
           images.map((item, index) => {

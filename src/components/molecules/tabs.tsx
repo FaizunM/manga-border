@@ -47,7 +47,7 @@ const TabIcon = ({ icon, color }: { icon: React.ReactNode; color: string }) => {
 };
 
 const Text = ({ text }: { text: string }) => {
-  return <div className="text-sm">{text}</div>;
+  return <div className="w-[100px] text-ellipsis line-clamp-1 text-sm">{text}</div>;
 };
 
 const Button = ({

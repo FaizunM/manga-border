@@ -3,14 +3,14 @@ export class BoxRect {
   label: string;
   coords: [number, number, number, number];
   trigger: boolean;
-  controlTrigger: number | null;
+  controlTrigger: number | undefined;
 
   constructor(
     ctx: CanvasRenderingContext2D,
     label: string,
     coords: number[],
     trigger: boolean,
-    controlTrigger: number | null
+    controlTrigger: number | undefined
   ) {
     this.ctx = ctx;
     this.label = label;
@@ -43,7 +43,6 @@ export class BoxRect {
         this.controlTrigger !== index ? 10 : 20
       );
     });
-
 
     this.ctx.fillStyle = this.trigger ? "green" : "red";
     const text = "+";
