@@ -15,7 +15,7 @@ export const MenuBar = ({
   const [menuIndex, setMenuIndex] = useState<number>();
 
   return (
-    <div className="w-full p-2 border-b-[1px] border-[rgba(0,0,0,0.1)] flex items-center fixed top-0 left-0 bg-white">
+    <div className="w-full p-2 border-b-[1px] border-[rgba(255,255,255,0.1)] flex items-center fixed top-0 left-0 bg-[rgba(255,255,255,0.1)]">
       {menus.map((item, index) => {
         return (
           <Menu

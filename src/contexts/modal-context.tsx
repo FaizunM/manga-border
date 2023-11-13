@@ -23,14 +23,13 @@ export const ModalContextProvider = ({ children }: IModalContextProvider) => {
     <ModalContext.Provider value={{ setModal }}>
       {modal && (
         <div
-          className="w-screen h-screen fixed top-0 left-0 bg-[rgba(0,0,0,0.05)] z-10 flex items-center justify-center"
+          className="w-screen h-screen fixed top-0 left-0 bg-[rgba(255,255,255,0.05)] z-10 flex items-center justify-center"
           onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
             const target = e.target as ITarget;
 
             if (target.id === "modal-container") {
               setModal(null);
             }
-            
           }}
           id="modal-container"
         >

@@ -44,7 +44,7 @@ export const CanvasOptions = ({
                   type={item.type}
                   name={item.name}
                   defaultValue={item.value}
-                  className="px-3 py-2 bg-[rgba(0,0,0,0.025)] hover:bg-[rgba(0,0,0,0.05)] transition-all duration-200 ease-in-out outline-none rounded-md"
+                  className="px-3 py-2 bg-[rgba(255,255,255,0.025)] hover:bg-[rgba(255,255,255,0.05)] transition-all duration-200 ease-in-out outline-none rounded-md"
                 />
               </div>
             );

@@ -5,7 +5,7 @@ export const ExportModal = () => {
   const [exportIndex, setExportIndex] = useState<number>(0);
 
   return (
-    <div className="w-[400px] h-fit bg-white rounded-lg p-8">
+    <div className="w-[400px] h-fit bg-[#282828] rounded-lg p-8">
       <div className="font-medium">Export</div>
       <form>
         <div className="w-full flex gap-2 mt-2">
@@ -13,7 +13,7 @@ export const ExportModal = () => {
             type="text"
             name="filename"
             placeholder="Filename"
-            className="w-full border-[1px] border-[rgba(0,0,0,0.05)] px-3 rounded-lg outline-none"
+            className="w-full border-[1px] border-[rgba(255,255,255,0.05)] px-3 rounded-lg outline-none"
           />
           <ExportSelect
             exportIndex={exportIndex}
@@ -44,7 +44,7 @@ const ExportSelect = ({
   const [showOption, setShowOption] = useState<boolean>(false);
   return (
     <div className="relative">
-      <div className="w-[112px] border-[1px] border-[rgba(0,0,0,0.05)] p-2 rounded-lg">
+      <div className="w-[112px] border-[1px] border-[rgba(255,255,255,0.05)] p-2 rounded-lg">
         <OptionButton
           text={exportOption[exportIndex]}
           height="h-8"
@@ -54,7 +54,7 @@ const ExportSelect = ({
         />
       </div>
       {showOption && (
-        <div className="absolute w-full top-14 p-2 bg-white border-[1px] border-[rgba(0,0,0,0.05)] left-0 rounded-lg">
+        <div className="absolute w-full top-14 p-2 bg-[rgba(255,255,255,0.1)] border-[1px] border-[rgba(255,255,255,0.05)] left-0 rounded-lg">
           {exportOption.map((item, index) => {
             return (
               <OptionButton
@@ -85,7 +85,7 @@ const OptionButton = ({
 }) => {
   return (
     <div
-      className={`w-full ${height} hover:bg-[rgba(0,0,0,0.05)] rounded-md flex items-center justify-center text-gray-400 hover:text-gray-600 transition-all duration-200 ease-in-out`}
+      className={`w-full ${height} hover:bg-[rgba(255,255,255,0.05)] rounded-md flex items-center justify-center text-gray-400 hover:text-gray-600 transition-all duration-200 ease-in-out`}
       onClick={onClick}
     >
       {text}

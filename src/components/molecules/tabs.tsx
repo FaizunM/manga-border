@@ -18,17 +18,18 @@ export const Tab = ({
   return (
     <div
       className={`flex gap-2 ${
-        focus && "border-b-2 border-[rgba(0,0,0,0.1)] text-black bg-[rgba(0,0,0,0.05)]"
-      } hover:bg-[rgba(0,0,0,0.025)] items-center text-gray-500 transition-all duration-100 ease-in-out`}
+        focus &&
+        "border-b-2 border-[rgba(255,255,255,0.1)] text-white bg-[rgba(255,255,255,0.05)]"
+      } hover:bg-[rgba(255,255,255,0.025)] items-center text-gray-300 transition-all duration-100 ease-in-out`}
       onClick={onClick}
     >
       <TabIcon
         color={saved ? "text-green-400" : "text-red-400"}
         icon={
           saved ? (
-            <i className="fa-regular fa-circle-check"></i>
+            <i className="fa-regular fa-image"></i>
           ) : (
-            <i className="fa-regular fa-circle-x"></i>
+            <i className="fa-regular fa-image"></i>
           )
         }
       />
@@ -47,7 +48,9 @@ const TabIcon = ({ icon, color }: { icon: React.ReactNode; color: string }) => {
 };
 
 const Text = ({ text }: { text: string }) => {
-  return <div className="w-[100px] text-ellipsis line-clamp-1 text-sm">{text}</div>;
+  return (
+    <div className="w-[100px] text-ellipsis line-clamp-1 text-sm">{text}</div>
+  );
 };
 
 const Button = ({
@@ -59,7 +62,7 @@ const Button = ({
 }) => {
   return (
     <div
-      className="w-6 h-6 flex items-center justify-center hover:bg-[rgba(0,0,0,0.05)] m-2 rounded-md transition-all duration-100 ease-in-out"
+      className="w-6 h-6 flex items-center justify-center hover:bg-[rgba(255,255,255,0.05)] m-2 rounded-md transition-all duration-100 ease-in-out"
       onClick={onClick}
     >
       {icon}

@@ -9,7 +9,7 @@ export const Button1 = ({
 }) => {
   return (
     <div
-      className="px-3 py-1 bg-[rgba(0,0,0,0.05)] hover:bg-[rgba(0,0,0,0.1)] transition-all duration-200 ease-in-out text-gray-500 hover:text-black rounded-lg flex items-center justify-center"
+      className="px-3 py-1 bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200 ease-in-out text-gray-300 hover:text-white rounded-lg flex items-center justify-center"
       onClick={action}
     >
       {text}
@@ -27,7 +27,7 @@ export const ExportButton = ({
   handleExport: (filename: string) => void;
 }) => {
   return (
-    <div className="flex bg-[rgba(0,0,0,0.02)] rounded-r-lg">
+    <div className="flex bg-[rgba(255,255,255,0.02)] rounded-r-lg">
       <Button1 action={setShownExport} text={"Export"} />
       {shown && (
         <form

@@ -66,7 +66,7 @@ export class BoxRect {
   }
 
   render() {
-    const color = this.trigger ? "rgba(0,0,0,0.05)" : "rgba(255,0,0,0.05)";
+    const color = this.trigger ? "rgba(255,255,255,0.05)" : "rgba(255,0,0,0.05)";
     this.ctx.fillStyle = color;
     this.ctx.fillRect(
       this.coords[0],

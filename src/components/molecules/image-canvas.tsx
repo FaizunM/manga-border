@@ -1,7 +1,14 @@
-import { LegacyRef, useEffect, useReducer, useRef, useState } from "react";
+import {
+  FormEvent,
+  LegacyRef,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { AppContainer, ColoumsContainer, Container } from "../atoms/containers";
 import { AppBar } from "../atoms/bars";
-import { CanvasMousePosition, CanvasName } from "../atoms/texts";
+import { CanvasMousePosition } from "../atoms/texts";
 import { Button1 } from "../atoms/buttons";
 import { RectBorder } from "./rect-border";
 import { CanvasOptions } from "./canvas-options";
@@ -42,6 +49,7 @@ export const ImageCanvas = ({
   const [boundingTriggered, setBoundingTriggered] = useState<number>();
   const [boundingSizeBuffer, setBoundingSizeBuffer] =
     useState<[number, number, number]>();
+  const [scale, setScale] = useState<number>(1);
 
   const handleMouseMove = (
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
@@ -116,11 +124,11 @@ export const ImageCanvas = ({
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      canvas.width = imageSize[0];
-      canvas.height = imageSize[1];
+      canvas.width = imageSize[0] * scale;
+      canvas.height = imageSize[1] * scale;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(image, 0, 0, imageSize[0], imageSize[1]);
+      ctx.drawImage(image, 0, 0, imageSize[0] * scale, imageSize[1] * scale);
       ctx.strokeStyle = "black";
 
       ctx.setLineDash([10, 10]);
@@ -266,100 +274,149 @@ export const ImageCanvas = ({
     labelsIndex,
     boundingTriggered,
     boundingSizeBuffer,
+    scale,
   ]);
 
-  return (
-    <Container>
-      <AppContainer>
-        <AppBar>
-          <CanvasName text={name} />
-          {[
-            {
-              name: "Show Rect",
-              action: () => setShownRectBorderList((state) => !state),
-            },
-            {
-              name: "Reset",
-              action: () => {
-                setBoundings([]);
-              },
-            },
-            {
-              name: "Options",
-              action: () => {},
-            },
-          ].map((item, index) => {
-            return (
-              <Button1 action={item.action} text={item.name} key={index} />
-            );
-          })}
-          <CanvasMousePosition mousePos={mousePos} />
-        </AppBar>
-        <Canvas
-          canvasRef={canvasRef}
-          onMouseMove={handleMouseMove}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-        />
-      </AppContainer>
-      <ColoumsContainer>
-        <RectBorder
-          data={boundings}
-          currentIndex={highlightBorder}
-          shown={shownRectBorderList}
-          setHighlightBorder={(index: number) => {
-            setHighlightBorder(index);
-          }}
-          removeBorder={(index: number) => {
-            const arr = boundings;
-            arr.splice(index, 1);
-            setBoundings(arr);
-            forceRender();
-          }}
-          updateLabel={(index: number, labelIndex: number) => {
-            boundings[index].labelIndex = labelIndex;
-            forceRender();
-          }}
-          updateCoords={(itemIndex, effected, value) => {
-            if (effected === 0) {
-              boundings[itemIndex].x1 = value;
-            }
-            if (effected === 1) {
-              boundings[itemIndex].y1 = value;
-            }
-            if (effected === 2) {
-              boundings[itemIndex].x2 = value;
-            }
-            if (effected === 3) {
-              boundings[itemIndex].y2 = value;
-            }
-            forceRender();
-          }}
-          labels={labels}
-        />
-        {image && (
-          <CanvasOptions
-            options={[
+  if (!ready) {
+    return (
+      <div className="w-full h-[400px] bg-[rgba(255,255,255,0.025)] rounded flex items-center justify-center">
+        <div className="w-12 h-12 flex items-center justify-center text-6xl">
+          <i className="fa-regular fa-spinner-third fa-spin"></i>
+        </div>
+      </div>
+    );
+  } else
+    return (
+      <Container>
+        <AppContainer>
+          <AppBar>
+            {[
               {
-                label: "Width",
-                name: "width",
-                type: "number",
-                value: image.width,
+                name: shownRectBorderList ? "Hide Rect" : "Show Rect",
+                action: () => setShownRectBorderList((state) => !state),
               },
               {
-                label: "Height",
-                name: "height",
-                type: "number",
-                value: image.height,
+                name: "Reset",
+                action: () => {
+                  setBoundings([]);
+                },
               },
-            ]}
-            saveCallback={(value) => {
-              setImageSize([value.width, value.height]);
-            }}
+              {
+                name: "Save",
+                action: () => {},
+              },
+              {
+                name: "Options",
+                action: () => {},
+              },
+            ].map((item, index) => {
+              return (
+                <Button1 action={item.action} text={item.name} key={index} />
+              );
+            })}
+            <ScaleSlider scale={scale} setScale={setScale} />
+            <CanvasMousePosition mousePos={mousePos} />
+          </AppBar>
+          <Canvas
+            canvasRef={canvasRef}
+            onMouseMove={handleMouseMove}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
           />
-        )}
-      </ColoumsContainer>
-    </Container>
+        </AppContainer>
+        <ColoumsContainer>
+          <RectBorder
+            data={boundings}
+            currentIndex={highlightBorder}
+            shown={shownRectBorderList}
+            setHighlightBorder={(index: number) => {
+              setHighlightBorder(index);
+            }}
+            removeBorder={(index: number) => {
+              const arr = boundings;
+              arr.splice(index, 1);
+              setBoundings(arr);
+              forceRender();
+            }}
+            updateLabel={(index: number, labelIndex: number) => {
+              boundings[index].labelIndex = labelIndex;
+              forceRender();
+            }}
+            updateCoords={(itemIndex, effected, value) => {
+              if (effected === 0) {
+                boundings[itemIndex].x1 = value;
+              }
+              if (effected === 1) {
+                boundings[itemIndex].y1 = value;
+              }
+              if (effected === 2) {
+                boundings[itemIndex].x2 = value;
+              }
+              if (effected === 3) {
+                boundings[itemIndex].y2 = value;
+              }
+              forceRender();
+            }}
+            labels={labels}
+          />
+          {image && (
+            <CanvasOptions
+              options={[
+                {
+                  label: "Width",
+                  name: "width",
+                  type: "number",
+                  value: image.width,
+                },
+                {
+                  label: "Height",
+                  name: "height",
+                  type: "number",
+                  value: image.height,
+                },
+              ]}
+              saveCallback={(value) => {
+                setImageSize([value.width, value.height]);
+              }}
+            />
+          )}
+        </ColoumsContainer>
+      </Container>
+    );
+};
+
+const ScaleSlider = ({
+  scale,
+  setScale,
+}: {
+  scale: number;
+  setScale: React.Dispatch<React.SetStateAction<number>>;
+}) => {
+  return (
+    <div className="flex gap-4 items-center">
+      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-[rgba(255,255,255,0.05)]">
+        <i className="fa-light fa-minus"></i>
+      </div>
+      <div className="w-[250px] flex items-center">
+        <input
+          id="small-range"
+          type="range"
+          min={0.25}
+          value={scale}
+          max={1.75}
+          defaultValue={1}
+          step={0.025}
+          onInput={(e: FormEvent<HTMLInputElement>) => {
+            const target = e.target as HTMLInputElement;
+            setScale(Number(target.value));
+          }}
+          className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700"
+        />
+      </div>
+      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-[rgba(255,255,255,0.05)]">
+        <i className="fa-light fa-plus"></i>
+      </div>
+    </div>
   );
 };
 
@@ -375,7 +432,7 @@ const Canvas = ({
   onMouseUp: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
 }) => {
   return (
-    <div className="w-full flex items-center overflow-scroll">
+    <div className="w-full flex items-center justify-center overflow-scroll scroll-smooth">
       <canvas
         ref={canvasRef}
         onMouseMove={onMouseMove}

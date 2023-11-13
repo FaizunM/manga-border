@@ -18,7 +18,7 @@ export const LabelView = ({
   onRemove: () => void;
 }) => {
   return (
-    <div className="h-[10] p-1 rounded-md border-[1px] border-[rgba(0,0,0,0.05)] text-sm flex gap-1">
+    <div className="h-[10] p-1 rounded-md border-[1px] border-[rgba(255,255,255,0.05)] text-sm flex gap-1">
       <InputText
         name="label"
         id="label"
@@ -48,7 +48,7 @@ const Button = ({
 }) => {
   return (
     <div
-      className="h-8 w-8 flex items-center justify-center hover:bg-[rgba(0,0,0,0.025)] rounded-md text-sm"
+      className="h-8 w-8 flex items-center justify-center hover:bg-[rgba(255,255,255,0.025)] rounded-md text-sm"
       onClick={onClick}
     >
       {children}
@@ -69,7 +69,7 @@ const SwitchButton = ({
 }) => {
   return (
     <div
-      className={`px-3 h-8 flex items-center justify-center hover:bg-[rgba(0,0,0,0.025)] rounded-md text-sm`}
+      className={`px-3 h-8 flex items-center justify-center hover:bg-[rgba(255,255,255,0.025)] rounded-md text-sm`}
       onClick={onClick}
     >
       {state ? textOn : textOff}
@@ -109,7 +109,7 @@ export const NewLabelForm = ({
 
 const FormArea = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-[10] p-1 rounded-md border-[1px] border-[rgba(0,0,0,0.05)] text-sm flex gap-1">
+    <div className="h-[10] p-1 rounded-md border-[1px] border-[rgba(255,255,255,0.05)] text-sm flex gap-1">
       {children}
     </div>
   );
@@ -133,7 +133,7 @@ const InputText = ({
       type="text"
       name={name}
       placeholder={placeholder}
-      className="h-8 w-[100px] rounded-md bg-[rgba(0,0,0,0.02)] px-2 outline-none"
+      className="h-8 w-[100px] rounded-md bg-[rgba(255,255,255,0.02)] px-2 outline-none"
       onChange={onChange}
       value={value}
       id={id}
@@ -145,7 +145,7 @@ const SubmitButton = ({ children }: { children: React.ReactNode }) => {
   return (
     <button
       type="submit"
-      className="h-8 w-8 flex items-center justify-center hover:bg-[rgba(0,0,0,0.025)] rounded-md text-sm"
+      className="h-8 w-8 flex items-center justify-center hover:bg-[rgba(255,255,255,0.025)] rounded-md text-sm"
     >
       {children}
     </button>

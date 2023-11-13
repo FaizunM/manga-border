@@ -35,7 +35,7 @@ export const RectBorder = ({
             data.map((item, index) => {
               return (
                 <div
-                  className={`w-full bg-[rgba(0,0,0,0.025)] p-2 rounded-lg text-gray-500 transition-all duration-200 ease-in-out flex flex-col gap-2 border-[1px] border-[rgba(0,0,0,0.02)]`}
+                  className={`w-full bg-[rgba(255,255,255,0.025)] p-2 rounded-lg text-gray-300 transition-all duration-200 ease-in-out flex flex-col gap-2 border-[1px] border-[rgba(255,255,255,0.02)]`}
                   key={index}
                   onClick={() => {
                     setHighlightBorder(index);
@@ -115,7 +115,7 @@ const CoordinateControl = ({
             {row.map((item, index) => {
               return (
                 <div
-                  className="col-span-1 bg-white rounded-lg border-2 border-[rgba(0,0,0,0.05)] p-1 flex gap-1 items-center"
+                  className="col-span-1 bg-[rgba(255,255,255,0.1)] rounded-lg border-2 border-[rgba(255,255,255,0.05)] p-1 flex gap-1 items-center"
                   key={index}
                 >
                   <ControlButton
@@ -152,7 +152,7 @@ const ControlButton = ({
 }) => {
   return (
     <div
-      className="w-8 h-8 flex items-center justify-center hover:bg-[rgba(0,0,0,0.025)] rounded-md"
+      className="w-8 h-8 flex items-center justify-center hover:bg-[rgba(255,255,255,0.025)] rounded-md"
       onClick={onClick}
     >
       {icon}
@@ -174,7 +174,7 @@ const OptionSelector = ({
   const [showLabels, setShowLabels] = useState<boolean>(false);
 
   return (
-    <div className="w-full hover:bg-[rgba(0,0,0,0.04)] bg-[rgba(0,0,0,0.02)] rounded-lg relative">
+    <div className="w-full hover:bg-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.02)] rounded-lg relative">
       <div
         className="w-full h-10 flex items-center justify-center"
         onClick={() => setShowLabels((state) => !state)}
@@ -182,11 +182,11 @@ const OptionSelector = ({
         {labels[labelsIndex]}
       </div>
       {showLabels && (
-        <div className="absolute w-full top-12 left-0 rounded-lg border-[2px] border-[rgba(0,0,0,0.02)] bg-white p-2 z-10">
+        <div className="absolute w-full top-12 left-0 rounded-lg border-[2px] border-[rgba(255,255,255,0.02)] bg-[#282828] p-2 z-10">
           {labels.map((label, labelIndex) => {
             return (
               <div
-                className="w-full h-10 flex items-center justify-center hover:bg-[rgba(0,0,0,0.02)] rounded-md"
+                className="w-full h-10 flex items-center justify-center hover:bg-[rgba(255,255,255,0.02)] rounded-md"
                 onClick={() => {
                   updateLabel(itemIndex, labelIndex);
                   setShowLabels(false);
