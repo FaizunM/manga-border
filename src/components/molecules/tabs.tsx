@@ -1,5 +1,5 @@
 export const TabContainer = ({ children }: { children: React.ReactNode }) => {
-  return <div className="w-full flex overflow-x-scroll">{children}</div>;
+  return <div className="w-full flex overflow-hidden hover:overflow-x-scroll">{children}</div>;
 };
 
 export const Tab = ({

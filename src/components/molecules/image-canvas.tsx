@@ -37,7 +37,6 @@ export const ImageCanvas = ({
   const [ready, setReady] = useState(false);
   const [mousePos, setMousePos] = useState([0, 0]);
   const [mouseStart, setMouseStart] = useState<number[]>([0, 0]);
-  const [mouseEnd, setMouseEnd] = useState<number[]>([0, 0]);
   const [isMouseClick, setIsMouseClick] = useState(false);
   const [controlTriggered, setControlTriggered] = useState<number>();
   const [boundings, setBoundings] = useState<TBoundings[]>([]);
@@ -58,38 +57,28 @@ export const ImageCanvas = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
-    const pos = [event.clientX - rect.left, event.clientY - rect.top];
+    const pos = [
+      (event.clientX - rect.left) / scale,
+      (event.clientY - rect.top) / scale,
+    ];
     setMousePos(pos);
   };
 
-  const handleMouseDown = (
-    event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
-  ) => {
+  const handleMouseDown = () => {
     if (!ready) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const pos = [event.clientX - rect.left, event.clientY - rect.top];
-    setMouseStart(pos);
+    setMouseStart(mousePos);
     setIsMouseClick(true);
   };
 
-  const handleMouseUp = (
-    event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
-  ) => {
+  const handleMouseUp = () => {
     if (!ready) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const pos = [event.clientX - rect.left, event.clientY - rect.top];
     const newBounding: TBoundings = {
       labelIndex: labelsIndex,
       x1: mouseStart[0],
       y1: mouseStart[1],
-      x2: pos[0],
-      y2: pos[1],
+      x2: mousePos[0],
+      y2: mousePos[1],
     };
-    setMouseEnd(pos);
     setIsMouseClick(false);
     if (boundingTriggered !== undefined) {
       setBoundingTriggered(undefined);
@@ -133,30 +122,30 @@ export const ImageCanvas = ({
 
       ctx.setLineDash([10, 10]);
       ctx.beginPath();
-      ctx.moveTo(0, mousePos[1]);
-      ctx.lineTo(canvas.width, mousePos[1]);
+      ctx.moveTo(0, mousePos[1] * scale);
+      ctx.lineTo(canvas.width, mousePos[1] * scale);
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.moveTo(mousePos[0], 0);
-      ctx.lineTo(mousePos[0], canvas.height);
+      ctx.moveTo(mousePos[0] * scale, 0);
+      ctx.lineTo(mousePos[0] * scale, canvas.height);
       ctx.stroke();
 
       ctx.setLineDash([0, 0]);
 
       if (isMouseClick && boundingTriggered === undefined) {
         ctx.strokeRect(
-          mouseStart[0],
-          mouseStart[1],
-          mousePos[0] - mouseStart[0],
-          mousePos[1] - mouseStart[1]
+          mouseStart[0] * scale,
+          mouseStart[1] * scale,
+          mousePos[0] * scale - mouseStart[0] * scale,
+          mousePos[1] * scale - mouseStart[1] * scale
         );
       }
 
       boundings.forEach((item, itemIndex) => {
         const coords = item;
-        const width = item.x2 - item.x1;
-        const height = item.y2 - item.y1;
+        const width = (item.x2 - item.x1) * scale;
+        const height = (item.y2 - item.y1) * scale;
         const mousex = mousePos[0];
         const mousey = mousePos[1];
 
@@ -248,10 +237,13 @@ export const ImageCanvas = ({
 
         const box = new BoxRect(
           ctx,
-          `${itemIndex + 1} ${labels[item.labelIndex]}`,
+          `${itemIndex + 1} ${
+            labels[item.labelIndex] ? labels[item.labelIndex] : "NO_LABEL"
+          }`,
           [coords.x1, coords.y1, coords.x2, coords.y2],
           highlightBorder === itemIndex,
-          controlTriggered
+          controlTriggered,
+          scale
         );
         box.controls();
         box.render();
@@ -268,7 +260,6 @@ export const ImageCanvas = ({
     highlightBorder,
     imageSize,
     stateRender,
-    mouseEnd,
     controlTriggered,
     labels,
     labelsIndex,

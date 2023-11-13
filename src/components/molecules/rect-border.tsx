@@ -179,7 +179,7 @@ const OptionSelector = ({
         className="w-full h-10 flex items-center justify-center"
         onClick={() => setShowLabels((state) => !state)}
       >
-        {labels[labelsIndex]}
+        {!labels[labelsIndex] ? "NO_LABEL" : labels[labelsIndex]}
       </div>
       {showLabels && (
         <div className="absolute w-full top-12 left-0 rounded-lg border-[2px] border-[rgba(255,255,255,0.02)] bg-[#282828] p-2 z-10">

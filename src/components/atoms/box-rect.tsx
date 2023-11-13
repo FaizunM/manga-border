@@ -4,19 +4,27 @@ export class BoxRect {
   coords: [number, number, number, number];
   trigger: boolean;
   controlTrigger: number | undefined;
+  scale: number;
 
   constructor(
     ctx: CanvasRenderingContext2D,
     label: string,
     coords: number[],
     trigger: boolean,
-    controlTrigger: number | undefined
+    controlTrigger: number | undefined,
+    scale: number
   ) {
     this.ctx = ctx;
     this.label = label;
-    this.coords = [coords[0], coords[1], coords[2], coords[3]];
+    this.coords = [
+      coords[0] * scale,
+      coords[1] * scale,
+      coords[2] * scale,
+      coords[3] * scale,
+    ];
     this.trigger = trigger;
     this.controlTrigger = controlTrigger;
+    this.scale = scale;
   }
 
   controls() {
@@ -46,7 +54,7 @@ export class BoxRect {
 
     this.ctx.fillStyle = this.trigger ? "green" : "red";
     const text = "+";
-    this.ctx.font = "14px Poppins";
+    this.ctx.font = this.scale + "rem Poppins";
     this.ctx.fillText(
       text,
       this.coords[0] + (this.coords[2] - this.coords[0]) / 2,
@@ -58,15 +66,22 @@ export class BoxRect {
     this.ctx.fillStyle = this.trigger ? "green" : "red";
     const pos0 = [this.coords[0], this.coords[1]];
     const text = this.label;
-    this.ctx.font = "14px Poppins";
+    this.ctx.font = this.scale + "rem Poppins";
     const width = this.ctx.measureText(text).width;
-    this.ctx.fillRect(pos0[0], pos0[1] - 20, width + 10, 20);
+    this.ctx.fillRect(
+      pos0[0],
+      pos0[1] - 20 * this.scale,
+      width + 10,
+      20 * this.scale
+    );
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(text, pos0[0] + 5, pos0[1] - 5);
+    this.ctx.fillText(text, pos0[0] + 5 * this.scale, pos0[1] - 5 * this.scale);
   }
 
   render() {
-    const color = this.trigger ? "rgba(255,255,255,0.05)" : "rgba(255,0,0,0.05)";
+    const color = this.trigger
+      ? "rgba(0,255,0,0.1)"
+      : "rgba(255,0,0,0.1)";
     this.ctx.fillStyle = color;
     this.ctx.fillRect(
       this.coords[0],

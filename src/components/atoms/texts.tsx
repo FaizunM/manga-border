@@ -7,9 +7,9 @@ export const CanvasName = ({ text }: { text: string }) => {
 };
 export const CanvasMousePosition = ({ mousePos }: { mousePos: number[] }) => {
   return (
-    <div className="min-w-[100px] w-[100px] px-4 flex items-center text-medium">
-      <div className="flex">X:{mousePos[0].toFixed(1)}</div>
-      <div className="flex">Y:{mousePos[1].toFixed(1)}</div>
+    <div className="min-w-[100px] w-[100px] px-4 flex gap-2 items-center text-medium">
+      <div className="flex">X:{mousePos[0].toFixed(0)}</div>
+      <div className="flex">Y:{mousePos[1].toFixed(0)}</div>
     </div>
   );
 };
