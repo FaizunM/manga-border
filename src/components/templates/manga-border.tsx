@@ -36,7 +36,7 @@ export const MangaBorder = () => {
 
   return (
     <div className="w-full p-8 flex flex-col gap-4">
-      <div className="w-full border-[1px] border-[rgba(255,255,255,0.05)] rounded-lg p-4">
+      <div className="w-full border bg-[rgba(255,255,255,0.05)] border-[rgba(255,255,255,0.05)] rounded-lg p-4">
         <div className="font-medium">Labels</div>
         <div className="mt-4 flex flex-wrap gap-2 items-center">
           {labels.map((item, index) => {
@@ -45,6 +45,7 @@ export const MangaBorder = () => {
                 value={item}
                 onLabelChange={(e) => {
                   labels[index] = e.target.value;
+                  forceUpdate()
                 }}
                 isDefault={labelsIndex === index}
                 onRemove={() => {
@@ -95,7 +96,7 @@ export const MangaBorder = () => {
           })}
           <label
             htmlFor="input-files"
-            className="min-w-[40px] h-10 flex items-center justify-center hover:bg-[rgba(255,255,255,0.025)] text-gray-400"
+            className="min-w-[40px] h-10 flex items-center justify-center hover:bg-[rgba(255,255,255,0.05)] rounded text-gray-400"
           >
             <i className="fa-light fa-plus"></i>
           </label>

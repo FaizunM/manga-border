@@ -1,6 +1,4 @@
 import {
-  FormEvent,
-  LegacyRef,
   useEffect,
   useReducer,
   useRef,
@@ -13,6 +11,8 @@ import { Button1 } from "../atoms/buttons";
 import { RectBorder } from "./rect-border";
 import { CanvasOptions } from "./canvas-options";
 import { BoxRect } from "../atoms/box-rect";
+import { ScaleRange } from "../atoms/scroll-range";
+import { Canvas } from "../atoms/canvas";
 
 export type TBoundings = {
   labelIndex: number;
@@ -23,7 +23,6 @@ export type TBoundings = {
 };
 
 export const ImageCanvas = ({
-  name,
   url,
   labels,
   labelsIndex,
@@ -237,8 +236,7 @@ export const ImageCanvas = ({
 
         const box = new BoxRect(
           ctx,
-          `${itemIndex + 1} ${
-            labels[item.labelIndex] ? labels[item.labelIndex] : "NO_LABEL"
+          `${itemIndex + 1} ${labels[item.labelIndex] ? labels[item.labelIndex] : "NO_LABEL"
           }`,
           [coords.x1, coords.y1, coords.x2, coords.y2],
           highlightBorder === itemIndex,
@@ -294,18 +292,18 @@ export const ImageCanvas = ({
               },
               {
                 name: "Save",
-                action: () => {},
+                action: () => { },
               },
               {
                 name: "Options",
-                action: () => {},
+                action: () => { },
               },
             ].map((item, index) => {
               return (
                 <Button1 action={item.action} text={item.name} key={index} />
               );
             })}
-            <ScaleSlider scale={scale} setScale={setScale} />
+            <ScaleRange scale={scale} setScale={setScale} />
             <CanvasMousePosition mousePos={mousePos} />
           </AppBar>
           <Canvas
@@ -376,60 +374,5 @@ export const ImageCanvas = ({
     );
 };
 
-const ScaleSlider = ({
-  scale,
-  setScale,
-}: {
-  scale: number;
-  setScale: React.Dispatch<React.SetStateAction<number>>;
-}) => {
-  return (
-    <div className="flex gap-4 items-center">
-      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-[rgba(255,255,255,0.05)]">
-        <i className="fa-light fa-minus"></i>
-      </div>
-      <div className="w-[250px] flex items-center">
-        <input
-          id="small-range"
-          type="range"
-          min={0.25}
-          value={scale}
-          max={1.75}
-          defaultValue={1}
-          step={0.025}
-          onInput={(e: FormEvent<HTMLInputElement>) => {
-            const target = e.target as HTMLInputElement;
-            setScale(Number(target.value));
-          }}
-          className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700"
-        />
-      </div>
-      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-[rgba(255,255,255,0.05)]">
-        <i className="fa-light fa-plus"></i>
-      </div>
-    </div>
-  );
-};
 
-const Canvas = ({
-  canvasRef,
-  onMouseMove,
-  onMouseDown,
-  onMouseUp,
-}: {
-  canvasRef: LegacyRef<HTMLCanvasElement> | undefined;
-  onMouseMove: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
-  onMouseDown: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
-  onMouseUp: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
-}) => {
-  return (
-    <div className="w-full flex items-center justify-center overflow-scroll scroll-smooth">
-      <canvas
-        ref={canvasRef}
-        onMouseMove={onMouseMove}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-      ></canvas>
-    </div>
-  );
-};
+

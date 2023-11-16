@@ -1,5 +1,5 @@
 export const TabContainer = ({ children }: { children: React.ReactNode }) => {
-  return <div className="w-full flex overflow-hidden hover:overflow-x-scroll">{children}</div>;
+  return <div className="w-full flex overflow-hidden hover:overflow-x-scroll mb-2 hover:mb-1 pb-1">{children}</div>;
 };
 
 export const Tab = ({
@@ -19,12 +19,12 @@ export const Tab = ({
     <div
       className={`flex gap-2 ${
         focus &&
-        "border-b-2 border-[rgba(255,255,255,0.1)] text-white bg-[rgba(255,255,255,0.05)]"
+        "border-b-2 border-[rgba(255,255,255,0.1)] text-white bg-[rgba(255,255,255,0.05)] active:bg-[rgba(255,255,255,0.075)]"
       } hover:bg-[rgba(255,255,255,0.025)] items-center text-gray-300 transition-all duration-100 ease-in-out`}
       onClick={onClick}
     >
       <TabIcon
-        color={saved ? "text-green-400" : "text-red-400"}
+        color={'text-gray-400'}
         icon={
           saved ? (
             <i className="fa-regular fa-image"></i>
