@@ -35,14 +35,14 @@ export const RectBorder = ({
             data.map((item, index) => {
               return (
                 <div
-                  className={`w-full bg-[rgba(255,255,255,0.025)] p-2 rounded-lg text-gray-300 transition-all duration-200 ease-in-out flex flex-col gap-2 border-[1px] border-[rgba(255,255,255,0.02)]`}
+                  className={`w-full bg-[rgba(255,255,255,0.025)] p-2 rounded-xl text-gray-300 transition-all duration-200 ease-in-out flex flex-col gap-2 border-[1px] border-[rgba(255,255,255,0.02)]`}
                   key={index}
                   onClick={() => {
                     setHighlightBorder(index);
                   }}
                 >
                   <div className="flex gap-2">
-                    <div className="w-10 h-10 flex items-center justify-center">
+                    <div className="w-10 h-12 flex items-center justify-center">
                       {index + 1}
                     </div>
                     <OptionSelector
@@ -64,7 +64,7 @@ export const RectBorder = ({
                   )}
                   {currentIndex === index && (
                     <div
-                      className="w-full h-10 bg-blue-500 hover:bg-blue-600 transition-all duration-200 ease-in-out rounded-lg flex items-center justify-center text-gray-200 "
+                      className="w-full h-12 bg-blue-500 hover:bg-blue-600 transition-all duration-200 ease-in-out rounded-xl flex items-center justify-center text-gray-200 "
                       onClick={() => removeBorder(index)}
                     >
                       Delete
@@ -115,7 +115,7 @@ const CoordinateControl = ({
             {row.map((item, index) => {
               return (
                 <div
-                  className="col-span-1 bg-[rgba(255,255,255,0.1)] rounded-lg border-2 border-[rgba(255,255,255,0.05)] p-1 flex gap-1 items-center"
+                  className="col-span-1 bg-[rgba(255,255,255,0.1)] rounded-xl border-2 border-[rgba(255,255,255,0.05)] p-1 flex gap-1 items-center"
                   key={index}
                 >
                   <ControlButton
@@ -152,7 +152,7 @@ const ControlButton = ({
 }) => {
   return (
     <div
-      className="w-8 h-8 flex items-center justify-center hover:bg-[rgba(255,255,255,0.025)] rounded-md"
+      className="w-8 h-8 flex items-center justify-center hover:bg-[rgba(255,255,255,0.025)] rounded-xl"
       onClick={onClick}
     >
       {icon}
@@ -174,19 +174,19 @@ const OptionSelector = ({
   const [showLabels, setShowLabels] = useState<boolean>(false);
 
   return (
-    <div className="w-full hover:bg-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.02)] rounded-lg relative">
+    <div className="w-full hover:bg-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.02)] rounded-xl relative">
       <div
-        className="w-full h-10 flex items-center justify-center"
+        className="w-full h-12 flex items-center justify-center"
         onClick={() => setShowLabels((state) => !state)}
       >
         {!labels[labelsIndex] ? "NO_LABEL" : labels[labelsIndex]}
       </div>
       {showLabels && (
-        <div className="absolute w-full top-12 left-0 rounded-lg border-[2px] border-[rgba(255,255,255,0.02)] bg-[#282828] p-2 z-10">
+        <div className="absolute w-full top-12 left-0 rounded-xl border-[2px] border-[rgba(255,255,255,0.02)] bg-[#282828] p-2 z-10">
           {labels.map((label, labelIndex) => {
             return (
               <div
-                className="w-full h-10 flex items-center justify-center hover:bg-[rgba(255,255,255,0.02)] rounded-md"
+                className="w-full h-12 flex items-center justify-center hover:bg-[rgba(255,255,255,0.02)] rounded-xl"
                 onClick={() => {
                   updateLabel(itemIndex, labelIndex);
                   setShowLabels(false);

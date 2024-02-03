@@ -36,7 +36,7 @@ export const CanvasOptions = ({
         >
           {options.map((item, index) => {
             return (
-              <div className="flex flex-col rounded-md gap-2" key={index}>
+              <div className="flex flex-col rounded-xl gap-2" key={index}>
                 <div className="font-medium text-sm text-gray-400">
                   {item.label}
                 </div>
@@ -44,14 +44,14 @@ export const CanvasOptions = ({
                   type={item.type}
                   name={item.name}
                   defaultValue={item.value}
-                  className="px-3 py-2 bg-[rgba(255,255,255,0.025)] hover:bg-[rgba(255,255,255,0.05)] transition-all duration-200 ease-in-out outline-none rounded-md"
+                  className="px-3 py-2 bg-[rgba(255,255,255,0.025)] hover:bg-[rgba(255,255,255,0.05)] transition-all duration-200 ease-in-out outline-none rounded-xl"
                 />
               </div>
             );
           })}
           <button
             type="submit"
-            className="w-full h-10 bg-blue-400 text-gray-100 rounded-md hover:bg-blue-500 transition-all duration-200 ease-in-out"
+            className="w-full h-12 bg-blue-400 text-gray-100 rounded-xl hover:bg-blue-500 transition-all duration-200 ease-in-out"
           >
             Save
           </button>

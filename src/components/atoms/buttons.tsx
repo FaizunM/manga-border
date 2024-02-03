@@ -9,7 +9,7 @@ export const Button1 = ({
 }) => {
   return (
     <div
-      className="px-3 py-1 bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200 ease-in-out text-gray-300 hover:text-white rounded-lg flex items-center justify-center"
+      className="px-3 py-1 bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.1)] transition-all duration-200 ease-in-out text-gray-300 hover:text-white rounded-xl flex items-center justify-center"
       onClick={action}
     >
       {text}

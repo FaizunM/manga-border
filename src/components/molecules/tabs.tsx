@@ -41,7 +41,7 @@ export const Tab = ({
 
 const TabIcon = ({ icon, color }: { icon: React.ReactNode; color: string }) => {
   return (
-    <div className={`w-10 h-10 flex items-center justify-center ${color}`}>
+    <div className={`w-10 h-12 flex items-center justify-center ${color}`}>
       {icon}
     </div>
   );
@@ -62,7 +62,7 @@ const Button = ({
 }) => {
   return (
     <div
-      className="w-6 h-6 flex items-center justify-center hover:bg-[rgba(255,255,255,0.05)] m-2 rounded-md transition-all duration-100 ease-in-out"
+      className="w-6 h-6 flex items-center justify-center hover:bg-[rgba(255,255,255,0.05)] m-2 rounded-xl transition-all duration-100 ease-in-out"
       onClick={onClick}
     >
       {icon}

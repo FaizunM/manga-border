@@ -10,7 +10,7 @@ export const ScaleRange = ({
   const [step] = useState<number>(0.01);
   return (
     <div className="flex gap-4 items-center">
-      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-[rgba(255,255,255,0.025)] hover:bg-[rgba(255,255,255,0.05)] active:bg-[rgba(255,255,255,0.075)]" onClick={() => {
+      <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-[rgba(255,255,255,0.025)] hover:bg-[rgba(255,255,255,0.05)] active:bg-[rgba(255,255,255,0.075)]" onClick={() => {
         setScale(state => state - step)
       }}>
         <i className="fa-light fa-minus"></i>
@@ -28,10 +28,10 @@ export const ScaleRange = ({
             const target = e.target as HTMLInputElement;
             setScale(Number(target.value));
           }}
-          className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700"
+          className="w-full h-1 bg-gray-200 rounded-xl appearance-none cursor-pointer range-sm dark:bg-gray-700"
         />
       </div>
-      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-[rgba(255,255,255,0.025)] hover:bg-[rgba(255,255,255,0.05)] active:bg-[rgba(255,255,255,0.075)]" onClick={() => {
+      <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-[rgba(255,255,255,0.025)] hover:bg-[rgba(255,255,255,0.05)] active:bg-[rgba(255,255,255,0.075)]" onClick={() => {
         setScale(state => state + step)
       }}>
         <i className="fa-light fa-plus"></i>

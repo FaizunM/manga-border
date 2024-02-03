@@ -1,10 +1,11 @@
 import { ChangeEvent, useContext, useReducer, useState } from "react";
-import { ImageCanvas } from "../molecules/image-canvas";
-import { ImportFile } from "../molecules/import-file";
+import { ImageCanvas, TBoundings } from "../molecules/image-canvas";
+import { ExportFile, ImportFile } from "../molecules/import-file";
 import { LabelView, NewLabelForm } from "../molecules/label";
 import { Tab, TabContainer } from "../molecules/tabs";
 import { IModalContext, ModalContext } from "../../contexts/modal-context";
 import { ConfimModal } from "../organims/modals/confirm-modal";
+import { BorderStorageContext } from "../../contexts/border-storage-context";
 
 export const MangaBorder = () => {
   const [images, setImages] = useState<File[]>([]);
@@ -34,9 +35,11 @@ export const MangaBorder = () => {
     forceUpdate();
   };
 
+  const { storage } = useContext(BorderStorageContext);
+
   return (
     <div className="w-full p-8 flex flex-col gap-4">
-      <div className="w-full border bg-[rgba(255,255,255,0.05)] border-[rgba(255,255,255,0.05)] rounded-lg p-4">
+      <div className="w-full border bg-[rgba(255,255,255,0.05)] border-[rgba(255,255,255,0.05)] rounded-xl p-4">
         <div className="font-medium">Labels</div>
         <div className="mt-4 flex flex-wrap gap-2 items-center">
           {labels.map((item, index) => {
@@ -45,7 +48,7 @@ export const MangaBorder = () => {
                 value={item}
                 onLabelChange={(e) => {
                   labels[index] = e.target.value;
-                  forceUpdate()
+                  forceUpdate();
                 }}
                 isDefault={labelsIndex === index}
                 onRemove={() => {
@@ -64,7 +67,10 @@ export const MangaBorder = () => {
         </div>
       </div>
       <div className="w-full flex flex-wrap gap-4">
-        {images.length < 1 && <ImportFile handleFiles={handleFiles} />}
+        <div className="flex gap-2">
+          <ImportFile handleFiles={handleFiles} />
+          <ExportFile data={storage} />
+        </div>
         <TabContainer>
           {images.map((item, index) => {
             return (
@@ -96,7 +102,7 @@ export const MangaBorder = () => {
           })}
           <label
             htmlFor="input-files"
-            className="min-w-[40px] h-10 flex items-center justify-center hover:bg-[rgba(255,255,255,0.05)] rounded text-gray-400"
+            className="min-w-[40px] h-12 flex items-center justify-center hover:bg-[rgba(255,255,255,0.05)] rounded text-gray-400"
           >
             <i className="fa-light fa-plus"></i>
           </label>
@@ -106,11 +112,17 @@ export const MangaBorder = () => {
             if (workspaceIndex === index)
               return (
                 <ImageCanvas
-                  name={item.name}
+                  filename={item.name}
                   url={getURLfromFile(item)}
                   labels={labels}
                   labelsIndex={labelsIndex}
                   key={index}
+                  callback={(data) => {
+                    storage[index] = data;
+                  }}
+                  saved={
+                    storage[index] || { filename: item.name, boundings: [] }
+                  }
                 />
               );
           })}

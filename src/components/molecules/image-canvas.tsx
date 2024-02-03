@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { AppContainer, ColoumsContainer, Container } from "../atoms/containers";
 import { AppBar } from "../atoms/bars";
 import { CanvasMousePosition } from "../atoms/texts";
@@ -23,14 +18,19 @@ export type TBoundings = {
 };
 
 export const ImageCanvas = ({
+  filename,
   url,
   labels,
   labelsIndex,
+  callback,
+  saved,
 }: {
-  name: string;
+  filename: string;
   url: string;
   labels: string[];
   labelsIndex: number;
+  callback: (data: { filename: string; boundings: TBoundings[] }) => void;
+  saved: { filename: string; boundings: TBoundings[] };
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = useState(false);
@@ -38,7 +38,9 @@ export const ImageCanvas = ({
   const [mouseStart, setMouseStart] = useState<number[]>([0, 0]);
   const [isMouseClick, setIsMouseClick] = useState(false);
   const [controlTriggered, setControlTriggered] = useState<number>();
-  const [boundings, setBoundings] = useState<TBoundings[]>([]);
+  const [boundings, setBoundings] = useState<TBoundings[]>(
+    saved.boundings || []
+  );
   const [highlightBorder, setHighlightBorder] = useState<number>(0);
   const [image, setImage] = useState<HTMLImageElement>();
   const [stateRender, forceRender] = useReducer((x) => x + 1, 0);
@@ -62,6 +64,10 @@ export const ImageCanvas = ({
     ];
     setMousePos(pos);
   };
+
+  useEffect(() => {
+    callback({ filename: filename, boundings: boundings });
+  }, [boundings]);
 
   const handleMouseDown = () => {
     if (!ready) return;
@@ -236,7 +242,8 @@ export const ImageCanvas = ({
 
         const box = new BoxRect(
           ctx,
-          `${itemIndex + 1} ${labels[item.labelIndex] ? labels[item.labelIndex] : "NO_LABEL"
+          `${itemIndex + 1} ${
+            labels[item.labelIndex] ? labels[item.labelIndex] : "NO_LABEL"
           }`,
           [coords.x1, coords.y1, coords.x2, coords.y2],
           highlightBorder === itemIndex,
@@ -292,11 +299,11 @@ export const ImageCanvas = ({
               },
               {
                 name: "Save",
-                action: () => { },
+                action: () => {},
               },
               {
                 name: "Options",
-                action: () => { },
+                action: () => {},
               },
             ].map((item, index) => {
               return (
@@ -373,6 +380,3 @@ export const ImageCanvas = ({
       </Container>
     );
 };
-
-
-
